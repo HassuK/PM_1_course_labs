@@ -2,7 +2,7 @@
 
 int main()
 {
-	float a;
+	int a;
 	std::cout << "Input number\n";
 	std::cin >> a;
 

@@ -61,33 +61,49 @@ void sum(char a[], char b[], char res[]) {
 	}
 }
 
-void multiplicate(int a[], int b[], int res[], int len_1, int len_2) {
 
+void multiplication(int a[], int b[], int len_1, int len_2) {
+
+	int mult[2000] = {};
 	int carry = 0;
-		for (int i = len_2 - 1; i >= 0; i--) {
-			for (int j = len_1 - 1; j >= 0; j--) {
-				int k = res[i + j] + b[i] * a[j] + carry;
-				res[i + j] = k % 10;
-				carry = k/10;
+	int carryd = 0;
+	int k = 0;
+
+	for (int i = 0; i < len_2; i++) {
+		k = i;
+		for (int j = 0; j <= len_1; j++) {
+			if (j == len_1) {
+				mult[k] = carry;
 			}
-			res[len_1 + len_2 - 1 - i] += carry;
+			else {
+				if (j == 0) {
+					carry = 0;
+				}
+				carryd = mult[k];
+				mult[k] = (b[len_2 - 1 - i] * a[len_1 - 1 - j] + mult[k] + carry) % 10;
+				carry = (b[len_2 - 1 - i] * a[len_1 - 1 - j] + carryd + carry) / 10;
+				k += 1;
+			}
 		}
+
+	}
+	if (carry != 0) {
+		std::cout << carry;
 	}
 
+	for (int i = len_1 + len_2 - 2; i >= 0; i--) {
+		std::cout << mult[i];
+	}
 
-
-
-
-
+}
 
 
 int main()
 {
 	
-	char num_1[1000] = { 0 };
-	char num_2[1000] = { 0 };
-	char res[1001] = { 0 };
-	int res_mult[2000] = {0};
+	char num_1[1000] = { '\0' };
+	char num_2[1000] = { '\0' };
+	char res[1001] = { '\0' };
 	int num1[1000] = {0};
 	int num2[1000] = {0};
 	
@@ -110,20 +126,20 @@ int main()
 		std::cout << res[i];
 	}
 
+	//char massiv to int massiv
 	for (int i = 0; i < strlen(num_1); i++) {
-		num1[i] = num_1[i] - 48;
+		num1[i] = num_1[i] - '0';
 	}
 	for (int i = 0; i < strlen(num_2); i++) {
-		num2[i] = num_2[i] - 48;
+		num2[i] = num_2[i] - '0';
 	}
 
 	std::cout << std::endl;
 
-	multiplicate(num1, num2, res_mult, strlen(num_1), strlen(num_2));
 
-	for (int i = 0; i < strlen(num_1) + strlen(num_2) - 1; i++) {
-		std::cout << res_mult[i];
-	}
+	multiplication(num1, num2, strlen(num_1), strlen(num_2));
+
+	
 
 	return 0;
 }

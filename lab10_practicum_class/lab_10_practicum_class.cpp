@@ -16,6 +16,9 @@ public:
 		m_name = name;
 		m_surname = surname;
 	}
+	~Abonent() {
+		std::cout << "Abonent destructor " << m_name << std::endl;
+	}
 
 	void Info()
 	{
@@ -37,6 +40,12 @@ public:
 		m_id = id;
 		m_name = name;
 	}
+	~Provider() {
+		for (int i = 0; i < m_abonents.size(); i++) {
+			delete m_abonents[i];
+		}
+		std::cout << "Provider destructor " << m_name << std::endl;
+	}
 
 	void AddAbonent(Abonent* abonent)
 	{
@@ -45,6 +54,7 @@ public:
 
 	void PrintAbonent()
 	{
+		std::cout << m_name << std::endl;
 		for (size_t i = 0; i < m_abonents.size(); i++) {
 			m_abonents[i]->Info();
 		}
@@ -53,7 +63,7 @@ public:
 
 int main()
 {
-	const int n = 3;
+	const int n = 2;
 	Provider* provider = new Provider(0, "Telecom");
 
 	std::cout << "Input ip of abonent and his name and surname: " << std::endl;
@@ -70,6 +80,7 @@ int main()
 	provider->PrintAbonent();
 
 	delete provider;
+
 
 	return 0;
 }
